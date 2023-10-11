@@ -17,6 +17,9 @@ const PostWidget = ({
   postUserId,
   name,
   description,
+  distance,
+  temps,
+  allure,
   location,
   picturePath,
   userPicturePath,
@@ -33,6 +36,7 @@ const PostWidget = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const medium = palette.neutral.medium;
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
@@ -55,7 +59,12 @@ const PostWidget = ({
         subtitle={location}
         userPicturePath={userPicturePath}
       />
-      <Typography color={main} sx={{ mt: "1rem" }}>
+      <FlexBetween mt="1rem" mr="3rem" ml="3rem">
+        <Typography color={main} variant="h4">{distance} km</Typography>
+        <Typography color={main} variant="h4">{temps} min</Typography>
+        <Typography color={main} variant="h4">{allure} min/km</Typography>
+      </FlexBetween>
+      <Typography color={medium} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
       {picturePath && (

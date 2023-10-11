@@ -14,6 +14,18 @@ const postSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    distance: {
+      type: String,
+    },
+    allure: {
+      type: String,
+    },
+    temps: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
     location: String,
     description: String,
     picturePath: String,
@@ -26,6 +38,7 @@ const postSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+
   },
   { timestamps: true }
 );
