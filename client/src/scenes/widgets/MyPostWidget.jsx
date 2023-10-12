@@ -30,6 +30,8 @@ const MyPostWidget = ({ picturePath }) => {
   const [isImage, setIsImage] = useState(false);
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
+  const [distance, setDistance] = useState("");
+  const [temps, setTemps] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
@@ -41,6 +43,8 @@ const MyPostWidget = ({ picturePath }) => {
     const formData = new FormData();
     formData.append("userId", _id);
     formData.append("description", post);
+    formData.append("distance", distance);
+    formData.append("temps", temps);
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
@@ -62,7 +66,7 @@ const MyPostWidget = ({ picturePath }) => {
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
         <InputBase
-          placeholder="What's on your mind..."
+          placeholder="Titre de votre activité"
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{
@@ -72,6 +76,35 @@ const MyPostWidget = ({ picturePath }) => {
             padding: "1rem 2rem",
           }}
         />
+      </FlexBetween>
+      <FlexBetween gap="1.5rem" mt="1rem">
+          <InputBase
+          onChange={(e) => setDistance(e.target.value)}
+          value={distance}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginLeft: "1rem",
+            marginRight: "1rem",
+          }}
+          placeholder="Distance"
+          />
+          <InputBase
+          onChange={(e) => setTemps(e.target.value)}
+          value={temps}
+          sx={{
+            width: "100%",
+            backgroundColor: palette.neutral.light,
+            borderRadius: "2rem",
+            padding: "1rem 2rem",
+            marginLeft: "1rem",
+            marginRight: "1rem",
+          }}
+          placeholder="Temps"
+          />
+          
       </FlexBetween>
       {isImage && (
         <Box
