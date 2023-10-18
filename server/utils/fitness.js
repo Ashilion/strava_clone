@@ -58,4 +58,36 @@ const trimpScores = generateTRIMPScores(numberOfTRIMPScores);
 
 let tab = calcul_atl_ctl_fitness(trimpScores, 50,50)
 
-export default calcul_atl_ctl_fitness;
+function nivo_line_data(fitness_data,trimp_data){
+    let res = [{
+        id:"ATL",
+        color:"green",
+        data:[]
+    },
+    {
+        id:"CTL",
+        color:"red",
+        data:[]
+    },
+    {
+        id:"TSB",
+        color:"blue",
+        data:[]
+    },
+    {
+        id:"Trimp",
+        color:"blue",
+        data:[],
+    }
+  ]
+  
+  for(let i = 0; i< trimp_data.length; i++){
+    res[0].data.push(fitness_data[0][i]);
+    res[0].data.push(fitness_data[1][i]);
+    res[0].data.push(fitness_data[2][i]);
+    res[0].data.push(trimp_data[i]);
+  }
+  return res
+}
+
+export default {calcul_atl_ctl_fitness, nivo_line_data};
