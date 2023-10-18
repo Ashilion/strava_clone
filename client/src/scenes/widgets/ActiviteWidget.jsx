@@ -11,6 +11,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
+  import MapsLinesWidget from "./MapsLinesWidget";
   
   const ActivitytWidget = ({
     postId,
@@ -65,18 +66,29 @@ import {
           subtitle={location}
           userPicturePath={userPicturePath}
         />
-        <Typography color={medium} sx={{ mt: "1rem" }}>
-          {description}
+
+        <Typography color={main} variant="h3">
+          {titre}
         </Typography>
-        <FlexBetween mt="1rem" mr="3rem" ml="3rem" style={{flexDirection:'column'}}>
-          <Typography color={main} variant="h4">{distance} km</Typography>
-          <Typography color={main} variant="h4">{stringDuration}</Typography>
-          <Typography color={main} variant="h4">{allure} min/km</Typography>
-          <Typography color={main} variant="h4">{heartrateMean} bpm</Typography>
-          <Typography color={main} variant="h4">{denivelePositif} m</Typography>
-        <Typography color={main} variant="h4">{scoreTrimp} score d'intensité</Typography>
+        <FlexBetween>
+          <Typography color={medium} sx={{ mt: "1rem" }}>
+            {description}
+          </Typography>
+          <Typography color={medium} sx={{ mt: "1rem" }}>
+            {location}
+          </Typography>
         </FlexBetween>
-        
+        <FlexBetween gap="1.5rem" mt="1rem">
+          <MapsLinesWidget data={data} />
+          <FlexBetween mt="1rem" mr="3rem" ml="3rem" style={{flexDirection:'column'}}>
+            <Typography color={main} variant="h4">{distance} km</Typography>
+            <Typography color={main} variant="h4">{stringDuration}</Typography>
+            <Typography color={main} variant="h4">{allure} min/km</Typography>
+            <Typography color={main} variant="h4">{heartrateMean} bpm</Typography>
+            <Typography color={main} variant="h4">{denivelePositif} m</Typography>
+            <Typography color={main} variant="h4">{scoreTrimp} score d'intensité</Typography>
+          </FlexBetween>
+        </FlexBetween>
         {data && (
           <img
             width="100%"
