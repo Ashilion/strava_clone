@@ -2,6 +2,7 @@ import { Box, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import FitnessPlotWidget from "scenes/widgets/FitnessPlotWidget";
+import ZoneFcBarWidget from "scenes/widgets/ZonesFcBarWidget";
 
 const FitnessPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -18,6 +19,7 @@ const FitnessPage = () => {
       >
         <Box>
             <FitnessPlotWidget/>
+            <ZoneFcBarWidget />
         </Box>
       </Box>
     </Box>

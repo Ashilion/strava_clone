@@ -40,7 +40,7 @@ const FitnessPlotWidget =  () =>{
       getFitnessData();
     }, []);
 
-
+    //const reducedTicks = dataFitness[0].data.filter((_, index) => index % 5 === 0).map(item => item.x);
 
     return (
         <WidgetWrapper m="2rem 0">
@@ -85,15 +85,15 @@ const FitnessPlotWidget =  () =>{
               stacked: true,
               reverse: false
           }}
-          yFormat=" >-.2f"
-          curve="linear"
+          curve="catmullRom"
           axisTop={null}
           axisRight={null}
           axisBottom={{
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: 'transportation',
+              //tickValues: reducedTicks, // Spécifiez les ticks que vous souhaitez afficher
+              legend: 'jour',
               legendOffset: 36,
               legendPosition: 'middle'
           }}
@@ -102,7 +102,8 @@ const FitnessPlotWidget =  () =>{
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: 'count',
+              
+              legend: 'score',
               legendOffset: -40,
               legendPosition: 'middle'
           }}

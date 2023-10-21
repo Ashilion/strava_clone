@@ -1,6 +1,6 @@
-const fs = require('fs');
-const xml2js = require('xml2js');
-const geolib = require('geolib');
+import fs from 'fs';
+import xml2js from 'xml2js';
+import geolib from 'geolib';
 
 // Load the GPX file (replace 'your.gpx' with the actual file path)
 const gpxFilePath = '15_1_2_3_4_3_2_1.gpx';
@@ -10,6 +10,7 @@ function readGpxFile(gpxFilePath){
     fs.readFile(gpxFilePath, 'utf8', (err, data) => {
         if (err) {
           console.error(err);
+          console.error("yes c'est la")
           return;
         }
       
@@ -23,10 +24,48 @@ function readGpxFile(gpxFilePath){
           const gpxData = result.gpx; // Assuming the root element is <gpx>
       
           // Process the GPX data to extract distance, time, and heart rate information
-          data = extractGPXInformation(gpxData);
+          const data = extractGPXInformation(gpxData);
+          console.log(data[0])
           return data
         });
       });
+    
+}
+
+async function readGpxFileSync(gpxFilePath){
+  return new Promise((resolve, reject) => {
+  fs.readFile(gpxFilePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+        console.error("yes c'est la")
+        return;
+      }
+    
+      
+    });
+    try {
+      const data = fs.readFileSync(gpxFilePath, 'utf8');
+      // Parse the GPX data into a JavaScript object
+      xml2js.parseString(data, (err, result) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+    
+        const gpxData = result.gpx; // Assuming the root element is <gpx>
+    
+        // Process the GPX data to extract distance, time, and heart rate information
+        const data = extractGPXInformation(gpxData);
+        console.log(data[0])
+        return data
+      });
+
+    } catch (err) {
+      console.error(err);
+      console.error("yes c'est la")
+      return;
+    }
+  });
 }
 
 

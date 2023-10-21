@@ -74,23 +74,22 @@ const nivo_line_data = (fitness_data,trimp_data) => {
         color:"blue",
         data:[]
     },
-    {
+    /*{
         id:"Trimp",
         color:"blue",
         data:[],
-    }
+    }*/
   ]
   
   for(let i = 0; i< trimp_data.length; i++){
-    let point = {x:i, y:0};
-    point.y = parseInt(fitness_data[0][i]); 
-    res[0].data.push(point);
-    point.y = parseInt(fitness_data[1][i]);
-    res[1].data.push(point);
-    point.y = parseInt(fitness_data[2][i]);
-    res[2].data.push(point);
-    point.y = parseInt(trimp_data[i]);
-    res[3].data.push(point);
+    let point_atl = {x:i, y:parseInt(fitness_data[0][i])};
+    let point_ctl = {x:i, y:parseInt(fitness_data[1][i])};
+    let point_tsb = {x:i, y:parseInt(fitness_data[2][i])};
+    let point_trimp = {x:i, y:parseInt(trimp_data[i])};
+    res[0].data.push(point_atl);
+    res[1].data.push(point_ctl);
+    res[2].data.push(point_tsb);
+    /*res[3].data.push(point_trimp);*/
   }
   return res
 }
