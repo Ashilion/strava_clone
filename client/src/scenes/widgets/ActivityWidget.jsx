@@ -13,7 +13,7 @@ import {
   import { setPost } from "state";
   import MapsLinesWidget from "./MapsLinesWidget";
   
-  const ActivitytWidget = ({
+  const ActivityWidget = ({
     postId,
     postUserId,
     name,

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
+import FitnessPage from "scenes/fitnessPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -32,6 +33,10 @@ function App() {
             <Route 
               path="/activity/:activityId" 
               element={isAuth ? <ActivityPage /> : <Navigate to="/" />} 
+            />
+            <Route
+              path="/fitness"
+              element={isAuth ? <FitnessPage /> : <Navigate to="/" />}
             />
           </Routes>
         </ThemeProvider>

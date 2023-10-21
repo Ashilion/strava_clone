@@ -53,12 +53,12 @@ function x_values(taille){
     return x_tab
 }
 
-const numberOfTRIMPScores = 200;
+const numberOfTRIMPScores = 60;
 const trimpScores = generateTRIMPScores(numberOfTRIMPScores);
 
 let tab = calcul_atl_ctl_fitness(trimpScores, 50,50)
 
-function nivo_line_data(fitness_data,trimp_data){
+const nivo_line_data = (fitness_data,trimp_data) => {
     let res = [{
         id:"ATL",
         color:"green",
@@ -82,12 +82,25 @@ function nivo_line_data(fitness_data,trimp_data){
   ]
   
   for(let i = 0; i< trimp_data.length; i++){
-    res[0].data.push(fitness_data[0][i]);
-    res[0].data.push(fitness_data[1][i]);
-    res[0].data.push(fitness_data[2][i]);
-    res[0].data.push(trimp_data[i]);
+    let point = {x:i, y:0};
+    point.y = parseInt(fitness_data[0][i]); 
+    res[0].data.push(point);
+    point.y = parseInt(fitness_data[1][i]);
+    res[1].data.push(point);
+    point.y = parseInt(fitness_data[2][i]);
+    res[2].data.push(point);
+    point.y = parseInt(trimp_data[i]);
+    res[3].data.push(point);
   }
   return res
 }
 
-export default {calcul_atl_ctl_fitness, nivo_line_data};
+export const getFitnessNivoData = async (req, res) => {
+    try {
+      const dataFitness = nivo_line_data(tab, trimpScores);
+      res.status(200).json(dataFitness);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  };
+  
