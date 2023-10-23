@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import FitnessPlotWidget from "scenes/widgets/FitnessPlotWidget";
 import ZoneFcBarWidget from "scenes/widgets/ZonesFcBarWidget";
+import LineChart from "components/LineChart";
 
 const FitnessPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -20,6 +21,9 @@ const FitnessPage = () => {
         <Box>
             <FitnessPlotWidget/>
             <ZoneFcBarWidget />
+            <LineChart get_url="http://localhost:3001/activity/heartrate" />
+            <LineChart get_url="http://localhost:3001/activity/pace" />
+            <LineChart get_url="http://localhost:3001/activity/denivele" />
         </Box>
       </Box>
     </Box>

@@ -147,3 +147,15 @@ export const getZonesNivo = async (req, res) =>{
     res.status(404).json({ message: err.message });
   }
 }
+
+export const getHeartrateNivo = async(req,res) =>{
+
+}
+
+export const getPaceNivo = async(req,res) =>{
+  
+}
+
+export const getDeniveleNivo = async(req,res) =>{
+  
+}
