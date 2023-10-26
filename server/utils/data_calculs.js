@@ -97,6 +97,23 @@ function calcul_trimp(zones){
   return total
 }
 
+
+
+function calculPaceInstantane (startPoint, endPoint){
+  const distance = geolib.getDistance(
+    { latitude: startPoint.lat, longitude: startPoint.lon },
+    { latitude: endPoint.lat, longitude: endPoint.lon }
+  );
+  
+  const start = new Date(startPoint.time);
+  const end = new Date(endPoint.time);
+  const differenceInMilliseconds =  (end - start);
+  const diffInSeconds = differenceInMilliseconds/1000
+
+  return distance/diffInSeconds
+}
+
+
 export const getZonesNivo = async (req, res) =>{
   try {
     const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
@@ -149,13 +166,79 @@ export const getZonesNivo = async (req, res) =>{
 }
 
 export const getHeartrateNivo = async(req,res) =>{
+  try{
+    const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
 
+    const data_gpx =readGpxFile(gpxFilePath) 
+
+    let hr_data = [{
+        id:"Heartrate",
+        color:"hsl(0, 82%, 39%)",
+        data:[]
+    }
+    ]
+
+    for(let i = 0; i< data_gpx.length; i++){
+      let point_atl = {x:i, y:data_gpx[i].heartRate};
+      hr_data[0].data.push(point_atl);
+      
+    }
+
+    return res.status(200).json(hr_data)
+    }
+  catch(err){
+    return res.status(404).json({message: err.message})
+  }
+  
 }
 
 export const getPaceNivo = async(req,res) =>{
-  
+  try{
+    const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
+
+    const data_gpx =readGpxFile(gpxFilePath) 
+    const pace_tab = calculPaceInstantane(data_gpx)
+    let pace_data = [{
+        id:"Heartrate",
+        color:"hsl(02, 87%, 33%)",
+        data:[]
+    }
+    ]
+
+    for(let i = 0; i< data_gpx.length; i++){
+      let point_atl = {x:i, y:data_gpx[i].pace};
+      pace_data[0].data.push(point_atl);
+      
+    }
+
+    return res.status(200).json(pace_data)
+    }
+  catch(err){
+    return res.status(404).json({message: err.message})
+  }
 }
 
 export const getDeniveleNivo = async(req,res) =>{
-  
+  try{
+    const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
+
+    const data_gpx =readGpxFile(gpxFilePath) 
+    let denivele_data = [{
+        id:"Heartrate",
+        color:"hsl(02, 87%, 33%)",
+        data:[]
+    }
+    ]
+
+    for(let i = 0; i < data_gpx.length; i++){
+      let point_atl = {x:i, y:data_gpx[i].elevation};
+      denivele_data[0].data.push(point_atl);
+      
+    }
+
+    return res.status(200).json(pace_data)
+    }
+  catch(err){
+    return res.status(404).json({message: err.message})
+  }
 }
