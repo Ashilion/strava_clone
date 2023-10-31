@@ -1,7 +1,8 @@
 import { read } from "fs";
 import readGpxFile from "./gpx_reader.js";
+import { start } from "repl";
 
-function heartRateMean(data){
+export const heartRateMean = (data)=>{
   console.log(data.length)
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
@@ -11,7 +12,7 @@ function heartRateMean(data){
   return sum/data.length;
 }
 
-function string_duration(data){
+export const string_duration = (data) => {
   const start = new Date(data[0].time);
   const end = new Date(data[data.length-1].time);
   const differenceInMilliseconds =  (end - start);
@@ -24,7 +25,7 @@ function string_duration(data){
       return (`${minutes}m ${seconds}s`)
 }
 
-function denivelePositif(data){
+export const denivelePositif = (data)=> {
   let sum = 0;
   for (let i = 1; i < data.length; i++) {
     if (data[i].elevation > data[i-1].elevation){
@@ -41,7 +42,7 @@ function calcul_duration(data){
   return differenceInMilliseconds/1000
 }
 
-function calcul_distance(data){
+export const  calcul_distance = (data)=>{
   let totalDistance = 0 
   data.forEach((point, index)=>{
     if (index > 0){
@@ -63,7 +64,7 @@ function calcul_distance(data){
   
 }
 
-function calcul_allure(data){
+export const calcul_allure = (data) =>{
   let distance = calcul_distance(data)
   let duration = calcul_duration(data)/60
   let allure = duration/distance
@@ -73,7 +74,7 @@ function calcul_allure(data){
 
 }
 
-function calcul_zone_hr(data, fc_max){
+export const calcul_zone_hr = (data, fc_max) =>{
   const tab_zones =[0,0,0,0,0]
   for (let i = 1; i < data.length; i++) {
     let fc = data[i].heartRate
@@ -89,7 +90,7 @@ function calcul_zone_hr(data, fc_max){
   
 }
 
-function calcul_trimp(zones){
+export const calcul_trimp = (zones)=>{
   let total = 0;
   for(i = 0 ; i < zones.length ; i++){
     total += zones[i]*(i+1)/60
@@ -113,6 +114,18 @@ function calculPaceInstantane (startPoint, endPoint){
   return distance/diffInSeconds
 }
 
+function allPaceInstantane (data){
+  res = []
+  for(let i = 1 ; i < data.length ; i++){
+    startPoint = data[i-1]
+    endPoint = data[i]
+    res.push({
+      x:i-1,
+      y:calculPaceInstantane(startPoint, endPoint)
+
+    })
+  }
+}
 
 export const getZonesNivo = async (req, res) =>{
   try {
@@ -197,19 +210,14 @@ export const getPaceNivo = async(req,res) =>{
     const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
 
     const data_gpx =readGpxFile(gpxFilePath) 
-    const pace_tab = calculPaceInstantane(data_gpx)
+    const pace_tab = allPaceInstantane(data_gpx)
     let pace_data = [{
-        id:"Heartrate",
+        id:"Pace",
         color:"hsl(02, 87%, 33%)",
-        data:[]
+        data: pace_tab
     }
     ]
 
-    for(let i = 0; i< data_gpx.length; i++){
-      let point_atl = {x:i, y:data_gpx[i].pace};
-      pace_data[0].data.push(point_atl);
-      
-    }
 
     return res.status(200).json(pace_data)
     }
@@ -224,7 +232,7 @@ export const getDeniveleNivo = async(req,res) =>{
 
     const data_gpx =readGpxFile(gpxFilePath) 
     let denivele_data = [{
-        id:"Heartrate",
+        id:"Denivelé",
         color:"hsl(02, 87%, 33%)",
         data:[]
     }

@@ -1,31 +1,45 @@
 import Activite from "../models/Activite.js";
 import User from "../models/User.js";
 import { convert_allure } from "../running_module/conversion.js";
+import { 
+  calcul_distance ,
+  calcul_allure,
+  calcul_trimp,
+  calcul_zone_hr,
+  string_duration,
+  denivelePositif,
+  heartRateMean,
+} from "../utils/data_calculs.js";
 
+import readGpxFile from "../utils/gpx_reader.js";
 
 /* CREATE */
 export const createActivite = async (req, res) => {
   try {
-    const { userId, description, picturePath, distance, temps, fichier_gpx_name, titre} = req.body;
+    const { userId, description, picturePath, gpxPath, titre} = req.body;
     const user = await User.findById(userId);
+
+    const data = readGpxFile(gpxPath);
+    const tab_zones = calcul_zone_hr(data, 200);
+
     const newActivite = new Activite({
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
       location: user.location,
       titre, 
-      distance,
-      temps,
-      heartrateMean: ,
-      denivelePositif: ,
-      stringDuration: ,
-      tabZonesFc: ,
-      scoreTrimp: , 
-      data: ,
-      allure : ,
+      distance: calcul_distance(data),
+      heartrateMean: heartRateMean(data),
+      denivelePositif: denivelePositif(data),
+      stringDuration: string_duration(data) ,
+      scoreTrimp: calcul_trimp(tab_zones), 
+      allure: calcul_allure(data),
       description,
+      gpxPath,
+      data:data,
       userPicturePath: user.picturePath,
       picturePath,
+      
       likes: {},
       comments: [],
     });

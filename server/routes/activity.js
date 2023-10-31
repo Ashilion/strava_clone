@@ -1,6 +1,8 @@
 import express from 'express';
 import { verifyToken } from '../middleware/auth.js';
 
+import { getHeartrateNivo, getPaceNivo, getDeniveleNivo } from '../utils/data_calculs.js';
+
 const router = express.Router();
 
 /*READ */

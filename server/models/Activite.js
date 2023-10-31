@@ -14,19 +14,23 @@ const activiteSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    titre: String, 
     distance: String,
-    allure: String,
+    
     heartrateMean: String,
     denivelePositif: String,
     stringDuration: String,
-    tabZonesFc: Array,
     scoreTrimp: String, 
     data: Array,
+    allure: String,
     date: {
       type: String,
     },
+    
     location: String,
     description: String,
+    gpxPath: String,
+    data:Array,
     picturePath: String,
     userPicturePath: String,
     likes: {
@@ -42,6 +46,6 @@ const activiteSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Activite = mongoose.model("Post", activiteSchema);
+const Activite = mongoose.model("Activite", activiteSchema);
 
 export default Activite;

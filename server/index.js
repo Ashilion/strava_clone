@@ -45,9 +45,21 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+const storage_gpx = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/gpx_assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload_gpx = multer({storage_gpx});
+
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.post("/activity", verifyToken, upload_gpx.single("gpxFile"),createPost )
 
 /* ROUTES */
 app.use("/auth", authRoutes);
