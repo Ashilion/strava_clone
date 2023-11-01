@@ -9,6 +9,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import FitnessPage from "scenes/fitnessPage";
+import ActivitiesFeedPage from "scenes/activitiesFeedPage";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -38,6 +39,11 @@ function App() {
               path="/fitness"
               element={isAuth ? <FitnessPage /> : <Navigate to="/" />}
             />
+
+            <Route 
+              path="/activity"
+              element={isAuth ? <ActivitiesFeedPage /> : <Navigate to="/" />} 
+              />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

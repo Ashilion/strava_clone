@@ -1,6 +1,7 @@
 import { read } from "fs";
 import readGpxFile from "./gpx_reader.js";
 import { start } from "repl";
+import geolib from 'geolib';
 
 export const heartRateMean = (data)=>{
   console.log(data.length)
@@ -9,7 +10,7 @@ export const heartRateMean = (data)=>{
     sum += parseInt(data[i].heartRate);
   }
   console.log(sum)
-  return sum/data.length;
+  return (sum/data.length).toFixed(0);
 }
 
 export const string_duration = (data) => {
@@ -32,7 +33,7 @@ export const denivelePositif = (data)=> {
       sum += data[i].elevation - data[i-1].elevation;
     }
   }
-  return sum;
+  return sum.toFixed(0);
 }
 
 function calcul_duration(data){
@@ -58,7 +59,7 @@ export const  calcul_distance = (data)=>{
     }
     
     })
-    return totalDistance/1000
+    return (totalDistance/1000).toFixed(2)
 
   
   
@@ -70,7 +71,7 @@ export const calcul_allure = (data) =>{
   let allure = duration/distance
   let minutes = Math.floor(allure)
   let secondes = Math.floor((allure - minutes)*60)
-  return `${minutes}m ${secondes}s`
+  return `${minutes},${secondes}`
 
 }
 
@@ -108,23 +109,30 @@ function calculPaceInstantane (startPoint, endPoint){
   
   const start = new Date(startPoint.time);
   const end = new Date(endPoint.time);
-  const differenceInMilliseconds =  (end - start);
+  let differenceInMilliseconds =  (end - start);
+  differenceInMilliseconds == 0 ? differenceInMilliseconds = 1000 : differenceInMilliseconds= differenceInMilliseconds;
   const diffInSeconds = differenceInMilliseconds/1000
-
-  return distance/diffInSeconds
+  console.log(`temps:${differenceInMilliseconds}, distance:${distance}, allure:${distance/differenceInMilliseconds}`)
+  return (distance/differenceInMilliseconds)*1000
 }
 
 function allPaceInstantane (data){
-  res = []
+  let temp = []
+  let res = []
   for(let i = 1 ; i < data.length ; i++){
-    startPoint = data[i-1]
-    endPoint = data[i]
-    res.push({
-      x:i-1,
-      y:calculPaceInstantane(startPoint, endPoint)
+    const startPoint = data[i-1]
+    const endPoint = data[i]
+    temp.push(calculPaceInstantane(startPoint, endPoint))
+  }
 
+  let smoothedPace = smoothData(temp, 20);
+  for (let i = 0; i <data.length-1; i++){
+    res.push({
+      x:i,
+      y:smoothedPace[i]
     })
   }
+  return res
 }
 
 export const getZonesNivo = async (req, res) =>{
@@ -182,7 +190,7 @@ export const getHeartrateNivo = async(req,res) =>{
   try{
     const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
 
-    const data_gpx =readGpxFile(gpxFilePath) 
+    const data_gpx = await readGpxFile(gpxFilePath) 
 
     let hr_data = [{
         id:"Heartrate",
@@ -209,8 +217,10 @@ export const getPaceNivo = async(req,res) =>{
   try{
     const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
 
-    const data_gpx =readGpxFile(gpxFilePath) 
+    const data_gpx = await readGpxFile(gpxFilePath) 
     const pace_tab = allPaceInstantane(data_gpx)
+    console.log("nouveau test" ,pace_tab[50])
+
     let pace_data = [{
         id:"Pace",
         color:"hsl(02, 87%, 33%)",
@@ -230,7 +240,7 @@ export const getDeniveleNivo = async(req,res) =>{
   try{
     const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
 
-    const data_gpx =readGpxFile(gpxFilePath) 
+    const data_gpx =await readGpxFile(gpxFilePath) 
     let denivele_data = [{
         id:"Denivelé",
         color:"hsl(02, 87%, 33%)",
@@ -244,9 +254,32 @@ export const getDeniveleNivo = async(req,res) =>{
       
     }
 
-    return res.status(200).json(pace_data)
+    return res.status(200).json(denivele_data)
     }
   catch(err){
     return res.status(404).json({message: err.message})
   }
+}
+
+function smoothData(data, windowSize) {
+  if (data.length < windowSize) {
+    return data; // Pas assez de données pour lisser
+  }
+
+  const smoothedData = [];
+  const halfWindowSize = Math.floor(windowSize / 2);
+
+  for (let i = 0; i < data.length; i++) {
+    if (i < halfWindowSize || i >= data.length - halfWindowSize) {
+      smoothedData.push(data[i]); // Les bords ne sont pas modifiés
+    } else {
+      const window = data.slice(i - halfWindowSize, i + halfWindowSize + 1);
+      const sum = window.reduce((acc, value) => acc + value, 0);
+      const average = sum / window.length;
+      console.log(average)
+      smoothedData.push(average);
+    }
+  }
+
+  return smoothedData;
 }

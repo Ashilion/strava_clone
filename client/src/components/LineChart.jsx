@@ -88,7 +88,7 @@ const LineChart =  ({
               stacked: true,
               reverse: false
           }}
-          curve={curve}
+          curve="catmullRom"
           axisTop={null}
           axisRight={null}
           axisBottom={{

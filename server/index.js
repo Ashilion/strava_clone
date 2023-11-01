@@ -19,6 +19,8 @@ import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import { users, posts } from "./data/index.js";
+import { createActivite } from "./controllers/activites.js";
+
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -59,14 +61,14 @@ const upload_gpx = multer({storage_gpx});
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
-app.post("/activity", verifyToken, upload_gpx.single("gpxFile"),createPost )
+app.post("/activity", verifyToken, upload.single("gpxFile"),createActivite )
 
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/fitness", fitnessRoutes);
-
+app.use("/activity", activityRoutes);
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 mongoose

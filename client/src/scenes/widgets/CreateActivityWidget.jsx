@@ -46,13 +46,15 @@ import {
       if (image) {
         formData.append("picture", image);
         formData.append("picturePath", image.name);
+        console.log("image")
       }
       if(gpxFile){
+        console.log("gpx")
         formData.append("gpxFile", gpxFile)
         formData.append("gpxPath", gpxFile.name)
       }
   
-      const response = await fetch(`http://localhost:3001/posts`, {
+      const response = await fetch(`http://localhost:3001/activity`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -60,6 +62,7 @@ import {
       const posts = await response.json();
       dispatch(setPosts({ posts }));
       setImage(null);
+      setGpxFile(null);
       setPost("");
     };
   
@@ -134,7 +137,10 @@ import {
             <Dropzone
               acceptedFiles=".gpx"
               multiple={false}
-              onDrop={(acceptedFiles) => setGpxFile(acceptedFiles[0])}
+              onDrop={(acceptedFiles) => {
+                console.log(acceptedFiles[0])
+                setGpxFile(acceptedFiles[0])
+              }}
             >
               {({ getRootProps, getInputProps }) => (
                 <FlexBetween>

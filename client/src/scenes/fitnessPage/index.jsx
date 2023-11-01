@@ -21,9 +21,9 @@ const FitnessPage = () => {
         <Box>
             <FitnessPlotWidget/>
             <ZoneFcBarWidget />
-            <LineChart get_url="http://localhost:3001/activity/heartrate" />
-            <LineChart get_url="http://localhost:3001/activity/pace" />
-            <LineChart get_url="http://localhost:3001/activity/denivele" />
+            <LineChart get_url="http://localhost:3001/activity/heartrate" curve ="catmullRom"/>
+            <LineChart get_url="http://localhost:3001/activity/pace" curve="catmullRom"/>
+            <LineChart get_url="http://localhost:3001/activity/denivele" curve="catmullRom" />
         </Box>
       </Box>
     </Box>
