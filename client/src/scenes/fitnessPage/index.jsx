@@ -4,6 +4,7 @@ import Navbar from "scenes/navbar";
 import FitnessPlotWidget from "scenes/widgets/FitnessPlotWidget";
 import ZoneFcBarWidget from "scenes/widgets/ZonesFcBarWidget";
 import LineChart from "components/LineChart";
+import MapsLinesWidget from "scenes/widgets/MapsLinesWidget";
 
 const FitnessPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -24,6 +25,7 @@ const FitnessPage = () => {
             <LineChart get_url="http://localhost:3001/activity/heartrate" curve ="catmullRom"/>
             <LineChart get_url="http://localhost:3001/activity/pace" curve="catmullRom"/>
             <LineChart get_url="http://localhost:3001/activity/denivele" curve="catmullRom" />
+            <MapsLinesWidget />
         </Box>
       </Box>
     </Box>

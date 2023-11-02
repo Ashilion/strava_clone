@@ -283,3 +283,28 @@ function smoothData(data, windowSize) {
 
   return smoothedData;
 }
+
+
+export function geoJsonSegment(data){
+  let res = {
+    type: "LineString",
+    coordinates: []
+  }
+  for(let i = 0 ; i< data.length ; i++){
+    res.coordinates.push([Number(data[i].lon),Number(data[i].lat)])
+  }
+  return res
+}
+
+export const getGeoJson = async(req,res) =>{
+  try{
+    const gpxFilePath = 'utils/15_1_2_3_4_3_2_1.gpx';
+
+    const data_gpx =await readGpxFile(gpxFilePath) 
+
+    return res.status(200).json(geoJsonSegment(data_gpx))
+    }
+  catch(err){
+    return res.status(404).json({message: err.message})
+  }
+}

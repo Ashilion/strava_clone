@@ -78,7 +78,7 @@ import {
             {location}
           </Typography>
         </FlexBetween>
-        <FlexBetween gap="1.5rem" mt="1rem">
+        <FlexBetween gap="1.5rem" mt="1rem" style={{flexDirection:'column'}}>
           <MapsLinesWidget data={data} />
           <FlexBetween mt="1rem" mr="3rem" ml="3rem" style={{flexDirection:'column'}}>
             <Typography color={main} variant="h4">{distance} km</Typography>
