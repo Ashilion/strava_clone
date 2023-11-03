@@ -66,29 +66,19 @@ import {
           subtitle={location}
           userPicturePath={userPicturePath}
         />
-
-        <Typography color={main} variant="h3">
-          {titre}
-        </Typography>
         <FlexBetween>
-          <Typography color={medium} sx={{ mt: "1rem" }}>
+          <Typography variant="h3"color={main} sx={{ mt: "1rem" }}>
             {description}
           </Typography>
-          <Typography color={medium} sx={{ mt: "1rem" }}>
-            {location}
-          </Typography>
         </FlexBetween>
-        <FlexBetween gap="1.5rem" mt="1rem" style={{flexDirection:'column'}}>
-          <MapsLinesWidget data={data} />
-          <FlexBetween mt="1rem" mr="3rem" ml="3rem" style={{flexDirection:'column'}}>
-            <Typography color={main} variant="h4">{distance} km</Typography>
-            <Typography color={main} variant="h4">{stringDuration}</Typography>
-            <Typography color={main} variant="h4">{allure} min/km</Typography>
-            <Typography color={main} variant="h4">{heartrateMean} bpm</Typography>
-            <Typography color={main} variant="h4">{denivelePositif} m</Typography>
-            <Typography color={main} variant="h4">{scoreTrimp} score d'intensité</Typography>
-            <Typography color ={main} variant="h4">{startTime} début</Typography>
+        <FlexBetween gap="1.5rem" mt="1rem" style={{flexDirection:'column', width:"100%"}}>
+          <FlexBetween width="100%"  style ={{justifyContent:"space-between"}}>
+            <Typography color={medium} >{distance} km</Typography>
+            <Typography color={medium} >{stringDuration}</Typography>
+            <Typography color={medium} >{allure} min/km</Typography>
           </FlexBetween>
+          <MapsLinesWidget data={data} />
+            
         </FlexBetween>
         {data && (
           <img
@@ -98,6 +88,22 @@ import {
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
           />
         )}
+        <FlexBetween gap="1rem">
+          <FlexBetween gap="0.3rem">
+            <IconButton onClick={patchLike}>
+              {isLiked ? (
+                <FavoriteOutlined sx={{ color: primary }} />
+              ) : (
+                <FavoriteBorderOutlined />
+              )}
+            </IconButton>
+            <Typography>{likeCount}</Typography>
+          </FlexBetween>
+
+          <FlexBetween gap="0.3rem">
+            <Typography>🤟</Typography>
+          </FlexBetween>
+        </FlexBetween>
       </WidgetWrapper>
     );
   };
