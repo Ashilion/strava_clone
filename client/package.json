@@ -5,8 +5,14 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fullcalendar/core": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
+    "@fullcalendar/list": "^6.1.9",
+    "@fullcalendar/react": "^6.1.9",
+    "@fullcalendar/timegrid": "^6.1.9",
     "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.11",
+    "@mui/material": "^5.14.16",
     "@nivo/bar": "^0.83.0",
     "@nivo/line": "^0.83.0",
     "@reduxjs/toolkit": "^1.8.6",
@@ -24,6 +30,7 @@
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
+    "source-map-loader": "^4.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

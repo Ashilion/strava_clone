@@ -26,12 +26,13 @@ import {
     stringDuration ,
     tabZonesFc ,
     scoreTrimp , 
-    data ,
+    startTime ,
     location,
     picturePath,
     userPicturePath,
     likes,
     comments,
+    data,
   }) => {
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
@@ -57,7 +58,6 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
     };
-  
     return (
       <WidgetWrapper m="2rem 0">
         <Friend
@@ -87,6 +87,7 @@ import {
             <Typography color={main} variant="h4">{heartrateMean} bpm</Typography>
             <Typography color={main} variant="h4">{denivelePositif} m</Typography>
             <Typography color={main} variant="h4">{scoreTrimp} score d'intensité</Typography>
+            <Typography color ={main} variant="h4">{startTime} début</Typography>
           </FlexBetween>
         </FlexBetween>
         {data && (

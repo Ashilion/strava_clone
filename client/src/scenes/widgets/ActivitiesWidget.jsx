@@ -56,6 +56,7 @@ const ActivitiesWidget = ({ userId, isProfile = false }) => {
           userPicturePath,
           likes,
           comments,
+          startTime,
         }) => (
           <ActivityWidget
             key={_id}
@@ -73,6 +74,7 @@ const ActivitiesWidget = ({ userId, isProfile = false }) => {
             userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
+            starTime={startTime}
           />
         )
       )}

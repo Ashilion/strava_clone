@@ -10,6 +10,8 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import FitnessPage from "scenes/fitnessPage";
 import ActivitiesFeedPage from "scenes/activitiesFeedPage";
+import CalendarPage from "scenes/calendarPage";
+import StravaPage from "scenes/stravaPage.jsx";
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -43,6 +45,14 @@ function App() {
             <Route 
               path="/activity"
               element={isAuth ? <ActivitiesFeedPage /> : <Navigate to="/" />} 
+              />
+            <Route 
+              path="/calendar"
+              element={isAuth ? <CalendarPage /> : <Navigate to ="/" />}
+              />
+            <Route 
+              path ="/strava"
+              element={isAuth ? <StravaPage /> : <Navigate to="/" />}
               />
           </Routes>
         </ThemeProvider>
