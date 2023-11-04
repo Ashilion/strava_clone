@@ -71,3 +71,14 @@ export const getFeedActivities = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+
+export const getActivity = async (req, res) =>{
+  try{
+    const { id } = req.params;
+    const activity = await Activite.findById(id);
+
+    res.status(200).json(activity);
+  }catch(err){
+    res.status(404).json({message:err.message})
+  }
+}

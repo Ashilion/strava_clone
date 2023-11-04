@@ -1,36 +1,32 @@
 import { Box, useMediaQuery } from "@mui/material";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
-import UserWidget from "scenes/widgets/UserWidget";
-import PostsWidget from "scenes/widgets/PostsWidget";
-import ActivityWidget from "scenes/widgets/ActivityWidget";
+import DashboardActivityWidget from "scenes/widgets/DashboardActivityWidget";
 
-const HomePage = () => {
+const ActivityPage = ({id}) => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
-
+  const {activity, setActivity} = useState();
+  const getActivity = async () => {
+    const response = await fetch(`http://localhost:3001/activity/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    setActivity(await response.json());
+  }
+  useEffect(() => {
+    getActivity();
+  }, []);
   return (
     <Box>
       <Navbar />
-      <Box
-        width="100%"
-        padding="2rem 6%"
-        display={isNonMobileScreens ? "flex" : "block"}
-        gap="0.5rem"
-        justifyContent="space-between"
-      >
-        <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={picturePath} />
-        </Box>
-        <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
-          mt={isNonMobileScreens ? undefined : "2rem"}
-        >
-          <PostsWidget userId={_id} />
-        </Box>
-      </Box>
+      <DashboardActivityWidget />
     </Box>
   );
 };
 
-export default HomePage;
+export default ActiviyPage;

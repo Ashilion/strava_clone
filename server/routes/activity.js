@@ -13,5 +13,6 @@ router.get("/denivele", verifyToken, getDeniveleNivo)
 router.get("/geojson", verifyToken, getGeoJson)
 
 router.get("/", verifyToken, getFeedActivities)
+router.get("/:id", verifyToken, getActivityNivo)
 
 export default router;
