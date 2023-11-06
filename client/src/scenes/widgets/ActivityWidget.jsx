@@ -12,7 +12,8 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
   import MapsLinesWidget from "./MapsLinesWidget";
-  
+  import FriendWithoutAdd from "components/FriendWithoutAdd";
+
   const ActivityWidget = ({
     postId,
     postUserId,
@@ -60,24 +61,29 @@ import {
     };
     return (
       <WidgetWrapper m="2rem 0">
-        <Friend
-          friendId={postUserId}
-          name={name}
-          subtitle={location}
-          userPicturePath={userPicturePath}
-        />
-        <FlexBetween>
+        <FlexBetween style={{height:"100%"}}>
+          <FlexBetween height="100%" style= {{flexDirection:'column', justifyContent:'space-between',}}>
+          <FriendWithoutAdd
+            friendId={postUserId}
+            name={name}
+            subtitle={location}
+            userPicturePath={userPicturePath}
+          />
           <Typography variant="h3"color={main} sx={{ mt: "1rem" }}>
-            {description}
-          </Typography>
+              {description}
+            </Typography>
+            </FlexBetween>
+            
+            <MapsLinesWidget data={data} />
+          
         </FlexBetween>
-        <FlexBetween gap="1.5rem" mt="1rem" style={{flexDirection:'column', width:"100%"}}>
+        <FlexBetween gap="1.5rem" mt="1rem"  style={{flexDirection:'column', width:"100%"}}>
           <FlexBetween width="100%"  style ={{justifyContent:"space-between"}}>
             <Typography color={medium} >{distance} km</Typography>
             <Typography color={medium} >{stringDuration}</Typography>
             <Typography color={medium} >{allure} min/km</Typography>
           </FlexBetween>
-          <MapsLinesWidget data={data} />
+          
             
         </FlexBetween>
         {data && (

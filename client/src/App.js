@@ -53,7 +53,7 @@ function App() {
             <Route 
               path ="/strava"
               element={isAuth ? <StravaPage /> : <Navigate to="/" />}
-              />
+              />  
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

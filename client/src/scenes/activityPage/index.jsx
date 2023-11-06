@@ -1,10 +1,11 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "scenes/navbar";
 import DashboardActivityWidget from "scenes/widgets/DashboardActivityWidget";
 
 const ActivityPage = ({id}) => {
+  const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picturePath } = useSelector((state) => state.user);
   const {activity, setActivity} = useState();
@@ -29,4 +30,4 @@ const ActivityPage = ({id}) => {
   );
 };
 
-export default ActiviyPage;
+export default ActivityPage;

@@ -12,7 +12,9 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
   import MapsLinesWidget from "./MapsLinesWidget";
-  
+  import LineChart from "components/LineChart";
+  import ZoneFcBarWidget from "./ZonesFcBarWidget";
+
   const DashboardActivityWidget = ({
     postId,
     postUserId,
